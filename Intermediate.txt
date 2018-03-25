@@ -1,0 +1,89 @@
+1000      COPY      START  1000   
+1000      FIRST     STL    RETADR 
+1003      CLOOP     JSUB   RDREC  
+1006      LDA       LENGTH        
+.Reserved word     
+1006      COMP      ZERO          
+.Reserved word     
+1006      JEQ       ENDFIL        
+.Reserved word     
+1006      JSUB      WRREC         
+.Reserved word     
+1006      J         CLOOP         
+.Reserved word     
+1006      ENDFIL    LDA    EOF    
+1009      STA       BUFFER        
+.Reserved word     
+1009      LDA       THREE         
+.Reserved word     
+1009      STA       LENGTH        
+.Reserved word     
+1009      JSUB      WRREC         
+.Reserved word     
+1009      LDL       RETADR        
+.Reserved word     
+1009                RSUB          
+100C      EOF       BYTE   C'EOF' 
+100F      THREE     WORD   3      
+1012      ZERO      WORD   0      
+1015      RETADR    RESW   1      
+1018      LENGTH    RESW   1      
+101B      BUFFER    RESW   4096   
+401B      RDREC     LDX    ZERO   
+401E      LDA       ZERO          
+.Reserved word     
+401E      RLOOP     TD     INPUT  
+4021      JEQ       RLOOP         
+.Reserved word     
+4021      RD        INPUT         
+.Reserved word     
+4021      COMP      ZERO          
+.Reserved word     
+4021      JEQ       EXIT          
+.Reserved word     
+4021      STCH      BUFFE  R,X    
+.Reserved word     
+4021      TIX       MAXLEN        
+.Reserved word     
+4021      JLT       RLOOP         
+.Reserved word     
+4021      EXIT      STX    LENGTH 
+4024                RSUB          
+4027      INPUT     BYTE   X'F1'  
+4118      MAXLEN    WORD   4096   
+411B      WRREC     LDX    ZERO   
+411E      WLOOP     TD     OUTPUT 
+4121      JEQ       WLOOP         
+.Reserved word     
+4121      LDCH      BUFFE  R,X    
+.Reserved word     
+4121      WD        OUTPUT        
+.Reserved word     
+4121      TIX       LENGTH        
+.Reserved word     
+4121      JLT       WLOOP         
+.Reserved word     
+4121                RSUB          
+4124      OUTPUT    BYTE   X'05'  
+4129      END       FIRST         
+---------------------
+ZERO | 1012
+INPUT | 4027
+WRREC | 411B
+OUTPUT | 4124
+ENDFIL | 1006
+LENGTH | 1018
+COPY | 4096
+FIRST | 1000
+RETADR | 1015
+BUFFER | 101B
+RLOOP | 401E
+MAXLEN | 4118
+CLOOP | 1003
+WLOOP | 411E
+END | 4129
+EOF | 100C
+RDREC | 401B
+EXIT | 4021
+THREE | 100F
+---------------------
